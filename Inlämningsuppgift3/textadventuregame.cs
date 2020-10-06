@@ -4,28 +4,27 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Inlämningsuppgift3
 {
-    class textadventuregame
+    public class textadventuregame
     {
-        static void Main(string[] args)
+        static void WelcomeMSG()
+        {
+            Console.WriteLine("\nWelcome to Text Adventure Game by David" +
+                "\nTo move: use \"go to kitchen\" etc.\nTo look around: use keywork \"look\".\n\n");
+        }
+        public static void Main(string[] args)
         {
             try
             {
-                bool game = true;
-                List<Room> rooms = Room.GetAllRooms();
-                Player player = new Player(rooms[0]);
-                while (game)
-                {
-                    Console.WriteLine("You are currently in " + player._Location._Name + ", " + player._Location._Description +
-                        "\nWhere do you want to go? Use arrow keys");
-                    player.NewInput(player,Console.ReadLine().ToLower());
-                }
-                
-                
+                WelcomeMSG();
+                Player player = new Player();
+                GameRound.NewMove(player);
             }
             catch (Exception exception)
             {
@@ -38,7 +37,6 @@ namespace Inlämningsuppgift3
                 }
                 Console.WriteLine(string.Concat(method.DeclaringType.FullName, ".", method.Name));
             }
-            
             Console.ReadLine();
         }
     }

@@ -13,8 +13,8 @@ namespace Inlämningsuppgift3.Classes
         public string _Description { get; set; }
         public UsableFurniture _UsableFurniture { get; set; }
         public List<Item> _Items { get; set; }
+        public List<Room> _Connected { get; set; }
 
-        
         public static List<Room> GetAllRooms()
         {
             List<Room> listOfRooms = new List<Room>();
@@ -46,6 +46,13 @@ namespace Inlämningsuppgift3.Classes
                     
                     listOfRooms.Add(room);
                 }
+                listOfRooms[0]._Connected = new List<Room> { listOfRooms[1], listOfRooms[2], listOfRooms[3] }; // lägg till 3 när upplåst
+                listOfRooms[1]._Connected = new List<Room> { listOfRooms[0] };
+                listOfRooms[2]._Connected = new List<Room> { listOfRooms[0] };
+                listOfRooms[3]._Connected = new List<Room> { listOfRooms[4], listOfRooms[5], listOfRooms[6] }; // lägg till 6 när sprängt
+                listOfRooms[4]._Connected = new List<Room> { listOfRooms[3] };
+                listOfRooms[5]._Connected = new List<Room> { listOfRooms[3] };
+                listOfRooms[6]._Connected = new List<Room> { };
             }
             return listOfRooms;
         }
