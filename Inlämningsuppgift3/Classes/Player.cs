@@ -10,13 +10,11 @@ namespace Inlämningsuppgift3.Classes
     {
         public List<Item> _Items { get; set; }
         public Room _Location { get; set; }
-        public bool _HasFiguredBomb { get; set; }
-        
 
         public Player()
         {
+            _Items = new List<Item>();
             _Location = Room.GetAllRooms().Where(x => x._Name == "hallway").FirstOrDefault();
-            _HasFiguredBomb = false;
         }
         
     }

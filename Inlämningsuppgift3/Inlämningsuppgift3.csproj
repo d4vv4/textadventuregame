@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ConsoleSpinner.cs" />
     <Compile Include="Classes\GameRound.cs" />
     <Compile Include="Classes\Item.cs" />
     <Compile Include="Classes\Player.cs" />

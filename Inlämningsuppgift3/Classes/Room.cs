@@ -31,18 +31,17 @@ namespace Inlämningsuppgift3.Classes
                     room._Description = tempstring[1].Trim();
                     room._UsableFurniture = new UsableFurniture(tempstring[2].Trim());
                     room._Items = new List<Item>();
-                    tempstring[3].Trim();
                     if (tempstring[3].Contains(','))
                     {
                         string[] items = tempstring[3].Split(',');
                         for (int i = 0; i < items.Length; i++)
                         {
-                            room._Items.Add(new Item(items[i]));
+                            room._Items.Add(new Item(items[i].Trim()));
                         }
                     }
                     else if (tempstring[3].Trim() != "")
                     {
-                        room._Items.Add(new Item(tempstring[3]));
+                        room._Items.Add(new Item(tempstring[3].Trim()));
                     }
 
                     listOfRooms.Add(room);

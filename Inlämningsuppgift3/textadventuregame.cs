@@ -16,15 +16,39 @@ namespace Inlämningsuppgift3
         static void WelcomeMSG()
         {
             Console.WriteLine("\nWelcome to Text Adventure Game by David" +
-                "\nTo move: use \"go to kitchen\" etc.\nTo look around: use keywork \"look\".\n\n");
+                "\nTo move: use \"go to kitchen\" etc." +
+                "\nTo look around: use keyword \"look\"." +
+                "\nTo open or search thru something: use keyword\"open\" infront of item." +
+                "\nTo take up or drop items: use keywords \"take\" and \"drop\" followed by item name." +
+                "\nTo use items: use keywords \"use\" and \"on\". \n\n");
         }
         public static void Main(string[] args)
         {
             try
             {
                 WelcomeMSG();
-                Player player = new Player();
-                GameRound.NewMove(player);
+                Console.WriteLine("Want to start? you will begin in a hallway and your goal is to make your way out of the house");
+                if (Console.ReadLine().ToLower() == "yes")
+                {
+                    Player player = new Player();
+                    ConsoleSpiner spin = new ConsoleSpiner();
+                    Console.Write("\nSetting up game...");
+                    DateTime start = DateTime.Now;
+                    while (DateTime.Now.Subtract(start).Seconds < 2)
+                    {
+                        Thread.Sleep(90);
+                        spin.Turn();
+                    }
+                    Console.SetCursorPosition(0, 12);
+                    Console.WriteLine("Game initialized, now entering house\n");
+                    GameRound.NewGame(player);
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
+                
+                
             }
             catch (Exception exception)
             {
@@ -35,7 +59,6 @@ namespace Inlämningsuppgift3
                 {
                     sw.WriteLine(string.Concat(method.DeclaringType.FullName, ".", method.Name));
                 }
-                Console.WriteLine(string.Concat(method.DeclaringType.FullName, ".", method.Name));
             }
             Console.ReadLine();
         }
