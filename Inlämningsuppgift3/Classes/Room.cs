@@ -49,23 +49,14 @@ namespace Inlämningsuppgift3.Classes
                 listOfRooms[0]._Connected = new List<Room> { listOfRooms[1], listOfRooms[2], listOfRooms[3] };
                 listOfRooms[1]._Connected = new List<Room> { listOfRooms[0] };
                 listOfRooms[2]._Connected = new List<Room> { listOfRooms[0] };
-                listOfRooms[3]._Connected = new List<Room> { listOfRooms[0], listOfRooms[4], listOfRooms[5], };
+                listOfRooms[3]._Connected = new List<Room> { listOfRooms[0], listOfRooms[4], listOfRooms[5], listOfRooms[6] };
                 listOfRooms[4]._Connected = new List<Room> { listOfRooms[3] };
                 listOfRooms[5]._Connected = new List<Room> { listOfRooms[3] };
                 listOfRooms[6]._Connected = new List<Room> { };
             }
             return listOfRooms;
         }
-        // lägg till 3 när upplåst
-        public static void AddLivingRoomAsConnected(Room room)
-        {
-            room._Connected.Add(GetAllRooms()[3]);
-        }
-        // lägg till 6 när sprängt
-        public static void AddHoleAsConnected(Room room)
-        {
-            room._Connected.Add(GetAllRooms()[6]);
-        }
+        
         public static string GetCurrentItems(Player player)
         {
             string items = "";

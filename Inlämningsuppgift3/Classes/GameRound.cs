@@ -14,12 +14,11 @@ namespace Inlämningsuppgift3.Classes
         public Player _Player { get; set; }
         public Room _Room { get; set; }
         public bool _DoorIsLocked { get; set; }
-
-        public GameRound(Player player,Room room,bool doorIsLocked)
+        public bool _WardrobeIsLocked { get; set; }
+        public GameRound()
         {
-            _Player = player;
-            _Room = room;
-            _DoorIsLocked = doorIsLocked;
+            _DoorIsLocked = true;
+            _WardrobeIsLocked = true;
         }
 
         List<string> possibleMovementInputs = new List<string> {"go to hallway", "go to kitchen", "go to living room", "go to storage room",
@@ -28,23 +27,28 @@ namespace Inlämningsuppgift3.Classes
         List<string> possibleUseInputs = new List<string> { "use key on door", "use crowbar on wardrobe", "use shield", "use bag of fertiliser on can",
                                                             "use timer on bomb","use bomb on timer", "use can on bag of fertiliser" };
 
-        public Player NewInput(Player player, string input)
+        public void NewInput(Player player, string input)
         {
             //if input is look
             if (input == "look")
             {
                 Console.WriteLine(player._Location._Description);
-                NewInput(player, Console.ReadLine().ToLower());
             }
             //if input is items
-            if (input == "items")
+            else if (input == "items")
             {
-                Console.WriteLine("your current items are:");
-                foreach (var item in player._Items)
+                if (player._Items.Count > 0)
                 {
-                    Console.WriteLine(item);
+                    Console.WriteLine("your current items are:");
+                    foreach (var item in player._Items)
+                    {
+                        Console.WriteLine(item);
+                    }
                 }
-                NewInput(player, Console.ReadLine().ToLower());
+                else
+                {
+                    Console.WriteLine("you dont carry any items yet");
+                }
             }
             //if input contains movement input
             else if (possibleMovementInputs.Contains(input))
@@ -56,62 +60,58 @@ namespace Inlämningsuppgift3.Classes
                 //if movement input is valid because of connected rooms
                 if (player._Location._Connected.Any(x => x._Name == tempInput))
                 {
-                    player._Location._UsableFurniture._IsOpen = false;
-                    player._Location = connectedRooms.Where(x => x._Name == tempInput).FirstOrDefault();
-                    Console.WriteLine("You are now in the " + player._Location._Name);
-                    NewInput(player, Console.ReadLine().ToLower());
+                    if (player._Location._Name == "hallway" && tempInput == "living room" && _DoorIsLocked)
+                    {
+                        Console.WriteLine("door is closed or locked, try to open or unlock the door");
+                    }
+                    else
+                    {
+                        player._Location = connectedRooms.Where(x => x._Name == tempInput).FirstOrDefault();
+                        Console.WriteLine("You are now in the " + player._Location._Name);
+                    }
                 }
                 else if (player._Location._Name == tempInput)
                 {
                     Console.WriteLine("Invalid input, you are already in " + player._Location._Name);
-                    NewInput(player, Console.ReadLine().ToLower());
                 }
                 else
-                {
+                {   
                     Console.WriteLine("Invalid input, room " + player._Location._Name + " and " + tempInput + " is not connected");
-                    NewInput(player, Console.ReadLine().ToLower());
                 }
             }
             //if input is about opening usableFurniture
             else if (input == "open " + player._Location._UsableFurniture._Name)
             {
-                //special for door since it is locked before you unlock it
-                if (player._Location._UsableFurniture._Name == "door")
+                //special for door and wardrobe since locked
+
+                if (player._Location._Name == "hallway")
                 {
-                    if (player._Items.Any(x => x._Name == "crowbar"))
+                    if (_DoorIsLocked)
                     {
-                        player._Location._UsableFurniture._IsOpen = true;
-                        PrintItems(player);
-                        NewInput(player, Console.ReadLine().ToLower());
+                        Console.WriteLine("the door is locked");
                     }
                     else
                     {
-                        Console.WriteLine("you need something to break the wardrobe open");
-                        NewInput(player, Console.ReadLine().ToLower());
+                        Console.WriteLine("you open the door and are now able to go to living room");
                     }
                 }
-                //special for wardrobe since you need crowbar
-                if (player._Location._UsableFurniture._Name == "wardrobe")
+                else if (player._Location._Name == "bedroom")
                 {
-                    if (player._Items.Any(x => x._Name == "crowbar"))
+                    if (_WardrobeIsLocked)
                     {
-                        player._Location._UsableFurniture._IsOpen = true;
-                        PrintItems(player);
-                        NewInput(player, Console.ReadLine().ToLower());
+                        Console.WriteLine("the wardrobe is locked and the lock is broken, maybe you can force it open with a tool?");
                     }
                     else
                     {
-                        Console.WriteLine("you need something to break the wardrobe open");
-                        NewInput(player, Console.ReadLine().ToLower());
+                        player._Location._UsableFurniture._IsOpen = true;
+                        PrintItems(player);
                     }
                 }
                 else
                 {
                     player._Location._UsableFurniture._IsOpen = true;
                     PrintItems(player);
-                    NewInput(player, Console.ReadLine().ToLower());
                 }
-
             }
             //take/drop input
             else if (input.Contains("take") || input.Contains("drop"))
@@ -121,19 +121,16 @@ namespace Inlämningsuppgift3.Classes
                     if (player._Location._UsableFurniture._IsOpen == true)
                     {
                         TakeOrDrop(player, input);
-                        NewInput(player, Console.ReadLine().ToLower());
                     }
                     else
                     {
                         InvalidInput(player);
-                        NewInput(player, Console.ReadLine().ToLower());
                     }
 
                 }
                 catch (Exception)
                 {
                     InvalidInput(player);
-                    NewInput(player, Console.ReadLine().ToLower());
                 }
             }
             //possible combination and uses of items
@@ -142,18 +139,27 @@ namespace Inlämningsuppgift3.Classes
                 //single way uses
                 if (input == "use key on door")
                 {
-                    if (true)
+                    if (player._Items.Any(x => x._Name == "key"))
                     {
-
+                        _DoorIsLocked = false;
+                        Console.WriteLine("you unlocked the door");
                     }
                     else
                     {
-
+                        Console.WriteLine("you need a key to unlock the door");
                     }
                 }
                 else if (input == "use crowbar on wardrobe")
                 {
-
+                    if (player._Items.Any(x => x._Name == "crowbar"))
+                    {
+                        _WardrobeIsLocked = false;
+                        Console.WriteLine("you break open the wardrobe and are now able to open it");
+                    }
+                    else
+                    {
+                        Console.WriteLine("you need something to break it open, maybe something from the storage room?");
+                    }
                 }
                 else if (input == "use shield")
                 {
@@ -169,7 +175,11 @@ namespace Inlämningsuppgift3.Classes
 
                 }
             }
-            return player;
+            else
+            {
+                InvalidInput(player);
+            }
+            NewInput(player, Console.ReadLine().ToLower());
         }
         //METHODS
         public static void InvalidInput(Player player)
@@ -180,11 +190,12 @@ namespace Inlämningsuppgift3.Classes
         //new game
         public static void NewGame(Player player)
         {
+            
+            GameRound gameRound = new GameRound();
             Console.WriteLine("You are now in the " + player._Location._Name);
-            GameRound gameRound = new GameRound(player,player._Location,true);
             gameRound.NewInput(player, Console.ReadLine());
         }
-
+        //print items when furniture is opened
         public static void PrintItems(Player player)
         {
             if (player._Location._Items.Count > 0)
