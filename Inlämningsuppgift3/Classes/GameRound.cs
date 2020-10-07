@@ -14,10 +14,19 @@ namespace Inlämningsuppgift3.Classes
         public Player _player { get; set; }
         public Room _room { get; set; }
 
+        bool drawerOpen = false;
+        bool cabinetOpen = false;
+        bool shelfOpen = false;
+        bool rubbishSearched = false;
 
         List<string> validInputs = new List<string> { };
+
         List<string> possibleMovementInputs = new List<string> {"go to hallway", "go to kitchen", "go to living room", "go to storage room",
                                                                 "go to bedroom", "go to restroom", "go thru hole"};
+
+        List<string> possibleUseInputs = new List<string> { "open drawer","take key","search thru pile of rubbish","take stick","take empty can of bean",
+            "use stick on shelf","take shield","take bag of fertiliser","open cabinet","take timer","use bag of fertiliser on empty can of bean",
+            "use timer on bomb","use bomb on crack" };
 
         public Player NewInput(Player player, string input)
         {
@@ -45,12 +54,45 @@ namespace Inlämningsuppgift3.Classes
                     Thread.Sleep(1000);
                     Console.WriteLine("Invalid input, room " + player._Location._Name + " and " + tempInput + " is not connected");
                     NewMoveWithOutPrint(player);
-                    
                 }
             }
-            else if (validInputs.Contains(input))
+            else if (input.Contains(player._Location._UsableFurniture._Name))
             {
+                if (input == "open " + player._Location._UsableFurniture._Name)
+                {
+                    if (player._Location._UsableFurniture._Name == "drawer")
+                    {
+                        drawerOpen = true;
+                        Thread.Sleep(1000);
+                        string items = Room.GetCurrentItems(player);
 
+                        Console.Write("you open " + player._Location._UsableFurniture._Name + ", inside it there is a " + items);
+                    }
+                    else if (player._Location._UsableFurniture._Name == "pile of rubbish")
+                    {
+                        rubbishSearched = true;
+                        Thread.Sleep(1000);
+                        string items = Room.GetCurrentItems(player);
+
+                        Console.Write("you open " + player._Location._UsableFurniture._Name + ", inside it there is a " + items);
+                    }
+                    else if (player._Location._UsableFurniture._Name == "shelf")
+                    {
+                        shelfOpen = true;
+                        Thread.Sleep(1000);
+                        string items = Room.GetCurrentItems(player);
+
+                        Console.Write("you open " + player._Location._UsableFurniture._Name + ", inside it there is a " + items);
+                    }
+                    else if (player._Location._UsableFurniture._Name == "cabinet")
+                    {
+                        cabinetOpen = true;
+                        Thread.Sleep(1000);
+                        string items = Room.GetCurrentItems(player);
+
+                        Console.Write("you open " + player._Location._UsableFurniture._Name + ", inside it there is a " + items);
+                    }
+                }
             }
             else
             {
@@ -59,26 +101,26 @@ namespace Inlämningsuppgift3.Classes
             }
             return player;
         }
-    public static void NewMove(Player player)
-    {
-        Thread.Sleep(1000);
-        GameRound gameRound = new GameRound();
-        Console.WriteLine("You are now in the " + player._Location._Name);
-        gameRound.NewInput(player, Console.ReadLine().ToLower());
-    }
+        public static void NewMove(Player player)
+        {
+            Thread.Sleep(1000);
+            GameRound gameRound = new GameRound();
+            Console.WriteLine("You are now in the " + player._Location._Name);
+            gameRound.NewInput(player, Console.ReadLine().ToLower());
+        }
         public static void NewMoveWithOutPrint(Player player)
-    {
-        Thread.Sleep(1000);
-        GameRound gameRound = new GameRound();
-        gameRound.NewInput(player, Console.ReadLine().ToLower());
-    }
+        {
+            Thread.Sleep(1000);
+            GameRound gameRound = new GameRound();
+            gameRound.NewInput(player, Console.ReadLine().ToLower());
+        }
 
-    public static void NewAction(Player player, string usedItem)
-    {
-        Thread.Sleep(1000);
-        GameRound gameRound = new GameRound();
-        Console.WriteLine("You use " + player._Location._Name);
-        gameRound.NewInput(player, Console.ReadLine().ToLower());
+        public static void NewAction(Player player, string usedItem)
+        {
+            Thread.Sleep(1000);
+            GameRound gameRound = new GameRound();
+            Console.WriteLine("You use " + player._Location._Name);
+            gameRound.NewInput(player, Console.ReadLine().ToLower());
+        }
     }
-}
 }

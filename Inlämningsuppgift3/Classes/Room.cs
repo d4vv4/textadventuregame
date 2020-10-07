@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,7 +47,7 @@ namespace Inlämningsuppgift3.Classes
 
                     listOfRooms.Add(room);
                 }
-                listOfRooms[0]._Connected = new List<Room> { listOfRooms[1], listOfRooms[2], };
+                listOfRooms[0]._Connected = new List<Room> { listOfRooms[1], listOfRooms[2], listOfRooms[3] };
                 listOfRooms[1]._Connected = new List<Room> { listOfRooms[0] };
                 listOfRooms[2]._Connected = new List<Room> { listOfRooms[0] };
                 listOfRooms[3]._Connected = new List<Room> { listOfRooms[0], listOfRooms[4], listOfRooms[5], };
@@ -65,6 +66,23 @@ namespace Inlämningsuppgift3.Classes
         public static void AddHoleAsConnected(Room room)
         {
             room._Connected.Add(GetAllRooms()[6]);
+        }
+        public static string GetCurrentItems(Player player)
+        {
+            string items = "";
+            if (player._Location._Items.Count > 1)
+            {
+                items += player._Location._Items[0]._Name;
+                for (int i = 1; i < player._Location._Items.Count; i++)
+                {
+                    items += ", " + player._Location._Items[i]._Name;
+                }
+            }
+            else
+            {
+                items += player._Location._Items.First()._Name;
+            }
+            return items;
         }
     }
 }

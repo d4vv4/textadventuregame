@@ -14,5 +14,6 @@ namespace Inlämningsuppgift3.Classes
         {
             _Name = input;
         }
+        
     }
 }
