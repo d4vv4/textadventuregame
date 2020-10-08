@@ -18,7 +18,7 @@ namespace Inlämningsuppgift3
             Console.WriteLine("\nWelcome to Text Adventure Game by David" +
                 "\nTo move: use \"go to kitchen\" etc." +
                 "\nTo look around: use keyword \"look\"." +
-                "\nTo open or search thru something: use keyword\"open\" infront of item." +
+                "\nTo open something: use keyword \"open\" infront of item." +
                 "\nTo take up or drop items: use keywords \"take\" and \"drop\" followed by item name." +
                 "\nTo use items: use keywords \"use\" and \"on\"." +
                 "\nYou will begin in a hallway and your goal is to make your way out of the house." +

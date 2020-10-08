@@ -11,8 +11,6 @@ namespace Inlämningsuppgift3.Classes
 {
     public class GameRound
     {
-        public Player _Player { get; set; }
-        public Room _Room { get; set; }
         public bool _DoorIsLocked { get; set; }
         public bool _WardrobeIsLocked { get; set; }
         public bool _CrackIsLocked { get; set; }
@@ -31,7 +29,7 @@ namespace Inlämningsuppgift3.Classes
         List<string> possibleUseInputs = new List<string> { "use key on door", "use crowbar on wardrobe", "use shield", "use bag of fertiliser on can",
                                                             "use timer on bomb","use bomb on timer", "use can on bag of fertiliser", "use timed bomb on crack" };
 
-        List<string> possibleInspects = new List<string> { "inspect door", "inspect crack" };
+        List<string> possibleInspects = new List<string> { "inspect locked door", "inspect crack", "inspect wardrobe" };
         public void NewInput(Player player, string input)
         {
             //if input is look
@@ -62,7 +60,7 @@ namespace Inlämningsuppgift3.Classes
                     {
                         if (_CrackIsLocked)
                         {
-                            Console.WriteLine("you cant go thru the crack, its too small, you need to somehow make a hole in the wall");
+                            Console.WriteLine("you cant go thru the crack");
                         }
                         else
                         {
@@ -107,13 +105,17 @@ namespace Inlämningsuppgift3.Classes
                 {
                     if (_WardrobeIsLocked)
                     {
-                        Console.WriteLine("the wardrobe is locked and the lock is broken, maybe you can force it open with a tool?");
+                        Console.WriteLine("the wardrobe is locked");
                     }
                     else
                     {
                         player._Location._UsableFurniture._IsOpen = true;
                         Room.PrintItems(player);
                     }
+                }
+                else if (player._Location._Name == "living room")
+                {
+                    InvalidInput(player);
                 }
                 else
                 {
@@ -210,6 +212,54 @@ namespace Inlämningsuppgift3.Classes
                 {
                     Item.TakeOrDropOrRemove(player, input);
                     Console.WriteLine("you combined the items to a timed bomb");
+                }
+                else
+                {
+                    InvalidInput(player);
+                }
+            }
+            else if (possibleInspects.Contains(input))
+            {
+                if (input == "inspect locked door" && player._Location._Name == "hallway")
+                {
+                    if (_DoorIsLocked)
+                    {
+                        Console.WriteLine("the door is locked and has a keyhole, if you find a key you might be able to unlock it");
+                    }
+                    else if(!_DoorIsOpen)
+                    {
+                        Console.WriteLine("the door is unlocked, you may open the door");
+                    }
+                    else
+                    {
+                        Console.WriteLine("the door is unlocked and open");
+                    }
+                }
+                else if (input == "inspect wardrobe" && player._Location._Name == "bedroom")
+                {
+                    if (_WardrobeIsLocked)
+                    {
+                        Console.WriteLine("the wardrobe is locked and the lock is broken, to be able to open it, you will need a tool of some sort");
+                    }
+                    else 
+                    {
+                        Console.WriteLine("the wardrobe is able to be opened");
+                    }
+                }
+                else if(input == "inspect crack" && player._Location._Name == "living room")
+                {
+                    if (_CrackIsLocked)
+                    {
+                        Console.WriteLine("the crack is small, maybe you can make a hole in the wall?");
+                    }
+                    else
+                    {
+                        Console.WriteLine("the crack has become a hole because you used a bomb on it");
+                    }
+                }
+                else
+                {
+                    InvalidInput(player);
                 }
             }
             //else
