@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Inlämningsuppgift3.Classes
 {
-    public class ConsoleSpiner
+    public class ConsoleSpinner
     {
         int counter;
-        public ConsoleSpiner()
+        public ConsoleSpinner()
         {
             counter = 0;
         }

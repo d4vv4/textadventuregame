@@ -13,42 +13,52 @@ namespace Inlämningsuppgift3
 {
     public class textadventuregame
     {
-        static void WelcomeMSG()
+        public static void WelcomeMSG()
         {
             Console.WriteLine("\nWelcome to Text Adventure Game by David" +
                 "\nTo move: use \"go to kitchen\" etc." +
                 "\nTo look around: use keyword \"look\"." +
                 "\nTo open or search thru something: use keyword\"open\" infront of item." +
                 "\nTo take up or drop items: use keywords \"take\" and \"drop\" followed by item name." +
-                "\nTo use items: use keywords \"use\" and \"on\". \n\n");
+                "\nTo use items: use keywords \"use\" and \"on\"." +
+                "\nYou will begin in a hallway and your goal is to make your way out of the house." +
+                "\nType \"ready\" when you are ready to go or \"exit\" if you want to exit\n");
         }
         public static void Main(string[] args)
         {
             try
             {
                 WelcomeMSG();
-                Console.WriteLine("Want to start? you will begin in a hallway and your goal is to make your way out of the house");
-                if (Console.ReadLine().ToLower() == "yes")
+                while (true)
                 {
-                    Player player = new Player();
-                    ConsoleSpiner spin = new ConsoleSpiner();
-                    Console.Write("\nSetting up game...");
-                    DateTime start = DateTime.Now;
-                    while (DateTime.Now.Subtract(start).Seconds < 2)
+                    string input = Console.ReadLine().ToLower();
+                    if (input == "ready")
                     {
-                        Thread.Sleep(90);
-                        spin.Turn();
+                        Console.Clear();
+                        WelcomeMSG();
+                        Player player = new Player();
+                        ConsoleSpinner spin = new ConsoleSpinner();
+                        Console.Write("Setting up game...");
+                        DateTime start = DateTime.Now;
+                        while (DateTime.Now.Subtract(start).Seconds < 2)
+                        {
+                            Thread.Sleep(90);
+                            spin.Turn();
+                        }
+                        Console.SetCursorPosition(0, 10);
+                        Console.WriteLine("Game initialized, now entering house\n");
+                        GameRound.NewGame(player);
+                        break;
                     }
-                    Console.SetCursorPosition(0, 12);
-                    Console.WriteLine("Game initialized, now entering house\n");
-                    GameRound.NewGame(player);
+                    else if (input == "exit")
+                    {
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        Console.WriteLine("type \"ready\" is you want to start, \"exit\" if you want to exit");
+                    }
                 }
-                else
-                {
-                    Environment.Exit(0);
-                }
-                
-                
             }
             catch (Exception exception)
             {

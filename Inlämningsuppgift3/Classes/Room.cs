@@ -74,5 +74,17 @@ namespace Inlämningsuppgift3.Classes
             }
             return items;
         }
+        public static void PrintItems(Player player)
+        {
+            if (player._Location._Items.Count > 0)
+            {
+                string items = Room.GetCurrentItems(player);
+                Console.WriteLine("you open " + player._Location._UsableFurniture._Name + ", inside it there is a " + items);
+            }
+            else
+            {
+                Console.WriteLine("you open " + player._Location._UsableFurniture._Name + ", but its empty");
+            }
+        }
     }
 }
