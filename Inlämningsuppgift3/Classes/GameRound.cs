@@ -237,7 +237,7 @@ namespace Inlämningsuppgift3.Classes
             if (Console.ReadLine().ToLower() == "yes")
             {
                 Console.Clear();
-                textadventuregame.WelcomeMSG();
+                Textadventuregame.WelcomeMSG();
                 NewGame(new Player());
             }
             else

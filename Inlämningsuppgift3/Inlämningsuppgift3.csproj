@@ -49,7 +49,7 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Room.cs" />
     <Compile Include="Classes\UsableFurniture.cs" />
-    <Compile Include="textadventuregame.cs" />
+    <Compile Include="Textadventuregame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

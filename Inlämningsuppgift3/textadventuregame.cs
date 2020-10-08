@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Inlämningsuppgift3
 {
-    public class textadventuregame
+    public class Textadventuregame
     {
         public static void WelcomeMSG()
         {
