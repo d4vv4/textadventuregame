@@ -1,13 +1,8 @@
 ﻿using Inlämningsuppgift3.Classes;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Inlämningsuppgift3
 {
