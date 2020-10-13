@@ -29,9 +29,10 @@ namespace Inlämningsuppgift3.Classes
         List<string> possibleUseInputs = new List<string> { "use key on door", "use crowbar on wardrobe", "use shield", "use bag of fertiliser on can",
                                                             "use timer on bomb","use bomb on timer", "use can on bag of fertiliser", "use timed bomb on crack" };
 
-        List<string> possibleInspects = new List<string> { "inspect locked door", "inspect crack", "inspect wardrobe" };
+        List<string> possibleInspects = new List<string> { "inspect door", "inspect crack", "inspect wardrobe" };
         public void NewInput(Player player, string input)
         {
+            Thread.Sleep(500);
             //if input is look
             if (input == "look")
             {
@@ -220,7 +221,7 @@ namespace Inlämningsuppgift3.Classes
             }
             else if (possibleInspects.Contains(input))
             {
-                if (input == "inspect locked door" && player._Location._Name == "hallway")
+                if (input == "inspect door" && player._Location._Name == "hallway")
                 {
                     if (_DoorIsLocked)
                     {
