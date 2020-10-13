@@ -26,7 +26,8 @@ namespace Inlämningsuppgift3.Classes
                                                             "use timer on bomb","use bomb on timer", "use can on bag of fertiliser", "use timed bomb on crack" };
 
         List<string> possibleInspects = new List<string> { "inspect door", "inspect crack", "inspect wardrobe" };
-        public void NewInput(Player player, string input)
+        
+        public void Game(Player player, string input)
         {
             Thread.Sleep(500);
             //if input is look
@@ -265,19 +266,19 @@ namespace Inlämningsuppgift3.Classes
             {
                 InvalidInput();
             }
-            NewInput(player, Console.ReadLine().ToLower());
+            Game(player, Console.ReadLine().ToLower());
         }
         //METHODS
         public static void InvalidInput()
         {
-            Console.WriteLine("invalid input, remember to use \"go to\", \"look\", \"open\" and \"use\" correctly");
+            Console.WriteLine("invalid input");
         }
         //new game
         public static void NewGame(Player player)
         {
             GameRound gameRound = new GameRound();
             Console.WriteLine("You are now in the " + player._Location._Name);
-            gameRound.NewInput(player, Console.ReadLine());
+            gameRound.Game(player, Console.ReadLine());
         }
         //restart game
         public static void RestartGame()
