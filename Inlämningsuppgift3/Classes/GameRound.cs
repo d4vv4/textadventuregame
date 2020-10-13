@@ -112,7 +112,7 @@ namespace Inlämningsuppgift3.Classes
                 }
                 else if (player._Location._Name == "living room")
                 {
-                    InvalidInput(player);
+                    InvalidInput();
                 }
                 else
                 {
@@ -131,13 +131,13 @@ namespace Inlämningsuppgift3.Classes
                     }
                     else
                     {
-                        InvalidInput(player);
+                        InvalidInput();
                     }
 
                 }
                 catch (Exception)
                 {
-                    InvalidInput(player);
+                    InvalidInput();
                 }
             }
             //possible combination and uses of items
@@ -212,9 +212,10 @@ namespace Inlämningsuppgift3.Classes
                 }
                 else
                 {
-                    InvalidInput(player);
+                    InvalidInput();
                 }
             }
+            //possible inspects
             else if (possibleInspects.Contains(input))
             {
                 if (input == "inspect door" && player._Location._Name == "hallway")
@@ -256,18 +257,18 @@ namespace Inlämningsuppgift3.Classes
                 }
                 else
                 {
-                    InvalidInput(player);
+                    InvalidInput();
                 }
             }
             //else
             else
             {
-                InvalidInput(player);
+                InvalidInput();
             }
             NewInput(player, Console.ReadLine().ToLower());
         }
         //METHODS
-        public static void InvalidInput(Player player)
+        public static void InvalidInput()
         {
             Console.WriteLine("invalid input, remember to use \"go to\", \"look\", \"open\" and \"use\" correctly");
         }
